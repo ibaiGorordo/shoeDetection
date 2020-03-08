@@ -10,6 +10,10 @@
   const model = await tf.loadGraphModel('quantizied/model.json');
   console.log('model loaded: ', model)
   // model.summary();
+  
+  screen.orientation.addEventListener('change', function() {
+    screen.orientation.lock("portrait")
+  });
 
   const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
