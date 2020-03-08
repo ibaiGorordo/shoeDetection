@@ -7,7 +7,7 @@
 //   const model = await cocoSsd.load({base: "lite_mobilenet_v2",modelUrl:"test/testmodel.json"});
 //   const model = await cocoSsd.load({base: "lite_mobilenet_v2",modelUrl:"test2/model.json"});
 
-  const model = await tf.loadGraphModel('quantizied/model.json');
+  const model = await tf.loadGraphModel('quantized - lite/model.json');
   console.log('model loaded: ', model)
   // model.summary();
   
