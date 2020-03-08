@@ -1,9 +1,10 @@
 <!-- Load TensorFlow.js. This is required to use MobileNet. -->
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.1"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.6.0"></script>
 <!-- Load the MobileNet model. -->
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
 
-<script src="https://unpkg.com/@tensorflow/tfjs-converter"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-converter"></script> -->
+
 
 <!-- Replace this with your image. Make sure CORS settings allow reading the image! -->
 
@@ -23,59 +24,4 @@
 <div id="status"></div>
 
 <!-- Place your code in the script tag below. You can also use an external .js file -->
-<script src="https://unpkg.com/@tensorflow/tfjs-converter">
-  // Notice there is no 'import' statement. 'mobilenet' and 'tf' is
-  // available on the index-page because of the script tag above.
-
-  import {loadGraphModel} from '@tensorflow/tfjs-converter';
-
-  // Load the model.
-  (async () => {
-    // const model = await tf.automl.loadObjectDetection('model_web/model.json');
-    // const model = await cocoSsd.load();
-
-    const manifest = await (await fetch('./model_web/model.json')).json()
-    // model = await tf.io.loadWeights(manifest,'./model_web/');
-    const model = await loadGraphModel('model_web/model.json');
-    // model.summary();
-
-    const video = document.getElementById("video");
-    const canvas = document.getElementById("canvas");
-    const status = document.getElementById("status");
-    const context = canvas.getContext("2d");
-    canvas.width = document.body.clientWidth; //document.width is obsolete
-    canvas.height = document.body.clientHeight; //document.height is obsolete
-    video.width = document.body.clientWidth; //document.width is obsolete
-    video.height = document.body.clientHeight; //document.height is obsolete
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: false,
-      video: {
-        facingMode: "environment"
-      }
-    });
-
-    video.srcObject = stream;
-
-    detect();
-    async function detect() {
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      // context.drawImage(video,0,0,canvas.width, canvas.height)
-      const result = await model.detect(video);
-      for (let i = 0; i < result.length; i++) {
-        context.beginPath();
-        context.rect(...result[i].bbox);
-        context.lineWidth = canvas.width / 100;
-        context.strokeStyle = "green";
-        context.fillStyle = "green";
-        context.font = "" + canvas.width / 10 + "px Arial";
-        context.stroke();
-        context.fillText(
-          result[i].score.toFixed(3) + " " + result[i].class,
-          result[i].bbox[0],
-          result[i].bbox[1] > 10 ? result[i].bbox[1] - 5 : 10
-        );
-      }
-      requestAnimationFrame(detect);
-    }
-  })();
-</script>
+<script src="index.js"></script>
