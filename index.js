@@ -14,9 +14,11 @@
     dummyPrediction[i].dispose();
   }
   
-  screen.orientation.addEventListener('change', function() {
-    screen.orientation.lock("portrait")
-  });
+  try {
+    creen.orientation.lock("portrait-primary");
+  }
+    catch(err) {
+  }
 
   const video = document.getElementById("video");
   const canvas = document.getElementById("canvas");
