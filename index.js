@@ -81,7 +81,7 @@
             context.lineWidth = canvas.width / 100;
             context.strokeStyle = "cyan";
             context.fillStyle = "cyan";
-            context.font = "" + canvas.height / 10 + "px Arial";
+            context.font = "" + canvas.height / 25 + "px Arial";
             context.stroke();
             context.fillText(
             "Shoe - " +  score.toFixed(1),
