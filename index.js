@@ -22,10 +22,10 @@
   const canvas = document.getElementById("canvas");
   const status = document.getElementById("status");
   const context = canvas.getContext("2d");
-  canvas.width = 800; //document.width is obsolete
-  canvas.height = 800; //document.height is obsolete
-  video.width = 800; //document.width is obsolete
-  video.height = 800; //document.height is obsolete
+  canvas.width = document.body.clientWidth; //document.width is obsolete
+  canvas.height = document.body.clientHeight; //document.height is obsolete
+  video.width = document.body.clientWidth; //document.width is obsolete
+  video.height = document.body.clientHeight; //document.height is obsolete
   const stream = await navigator.mediaDevices.getUserMedia({
     audio: false,
     video: {
