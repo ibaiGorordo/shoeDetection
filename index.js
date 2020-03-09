@@ -4,12 +4,9 @@
 // Load the model.
 (async () => {
 
-//   const model = await cocoSsd.load({base: "lite_mobilenet_v2",modelUrl:"test/testmodel.json"});
-//   const model = await cocoSsd.load({base: "lite_mobilenet_v2",modelUrl:"test2/model.json"});
-
+  tf.setBackend('webgl');
   const model = await tf.loadGraphModel('quantized - lite/model.json');
   console.log('model loaded: ', model)
-  // model.summary();
   const dummy =tf.zeros([1, 300,300,3])
   const dummyPrediction = await model.executeAsync({ image_tensor: dummy })
   dummy.dispose();
@@ -57,15 +54,15 @@
     
     const predictionBoxes = predictions[0].dataSync();
     const totalPredictions = predictions[1].dataSync();
-    const predictionClasses = predictions[2].dataSync();
-    var predictionScores = predictions[3].dataSync();
-    
+    const predictionScores = predictions[3].dataSync();
+    // console.log(predictionScores>0.3)
+    // console.log("Test")
     context.clearRect(0, 0, canvas.width, canvas.height);   
 
     // const result = await model.predict(video);
 
     context.beginPath();
-    for (let i = 0; i < totalPredictions[0]; i++) {
+    for (let i = 0; i < 5; i++) {
         const minY = predictionBoxes[i * 4] * video.height
         const minX = predictionBoxes[i * 4 + 1] * video.width
         const maxY = predictionBoxes[i * 4 + 2] * video.height
@@ -82,12 +79,12 @@
             // context.rect(100, 100, 100,100);
 
             context.lineWidth = canvas.width / 100;
-            context.strokeStyle = "green";
-            context.fillStyle = "green";
-            context.font = "" + canvas.width / 10 + "px Arial";
+            context.strokeStyle = "cyan";
+            context.fillStyle = "cyan";
+            context.font = "" + canvas.height / 10 + "px Arial";
             context.stroke();
             context.fillText(
-            "Shoe - " +  score.toFixed(3),
+            "Shoe - " +  score.toFixed(1),
             minX,
             minY > 10 ? minY - 5 : 10
             );
