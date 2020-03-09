@@ -49,7 +49,6 @@
 
     
     const predictionBoxes = predictions[0].dataSync();
-    const totalPredictions = predictions[1].dataSync();
     const predictionScores = predictions[3].dataSync();
     // console.log(predictionScores>0.3)
     // console.log("Test")
@@ -59,15 +58,15 @@
 
     context.beginPath();
     for (let i = 0; i < 5; i++) {
-        const minY = predictionBoxes[i * 4] * video.height
-        const minX = predictionBoxes[i * 4 + 1] * video.width
-        const maxY = predictionBoxes[i * 4 + 2] * video.height
-        const maxX = predictionBoxes[i * 4 + 3] * video.width
         const score = predictionScores[i] * 100
 
         // console.log(score)
         
       if (score > 30) {
+            const minY = predictionBoxes[i * 4] * video.height
+            const minX = predictionBoxes[i * 4 + 1] * video.width
+            const maxY = predictionBoxes[i * 4 + 2] * video.height
+            const maxX = predictionBoxes[i * 4 + 3] * video.width
             
             // console.log('model loaded: ', minX, minY, maxX - minX, maxY - minY)
             
