@@ -10,6 +10,12 @@
   const model = await tf.loadGraphModel('quantized - lite/model.json');
   console.log('model loaded: ', model)
   // model.summary();
+  const dummy =tf.zeros([1, 300,300,3])
+  const dummyPrediction = await model.executeAsync({ image_tensor: dummy })
+  dummy.dispose();
+  for(let i = 0; i < dummyPrediction.length; i++) {
+    dummyPrediction[i].dispose();
+  }
   
   screen.orientation.addEventListener('change', function() {
     screen.orientation.lock("portrait")
